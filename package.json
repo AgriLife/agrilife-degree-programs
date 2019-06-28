@@ -1,0 +1,48 @@
+{
+  "name": "agrilife-degree-programs",
+  "version": "0.1.0",
+  "description": "College degree program custom post type.",
+  "main": "agrilife-degree-program.php",
+  "scripts": {
+    "start": "git config core.hooksPath hooks && chmod u+x ./hooks/pre-commit && composer install && npm install && grunt",
+    "checkwp": "npm run configphpcs && npm run checkphp",
+    "configphpcs": "vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "checkphp": "vendor/bin/phpcs --standard=WordPress --report=source ./*.php ./src ./templates && vendor/bin/phpcs --standard=WordPress ./*.php ./src ./templates"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.2.1",
+    "foundation-sites": "^6.4.3",
+    "grunt": "^1.0.3",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-postcss": "^0.9.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-sass-lint": "^0.2.4"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgriLife/agrilife-degree-programs.git"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "custom",
+    "post",
+    "type"
+  ],
+  "author": "Zachary Watkins",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/AgriLife/agrilife-degree-programs/issues"
+  },
+  "homepage": "https://github.com/AgriLife/agrilife-degree-programs#readme",
+  "browserslist": [
+    "last 2 versions",
+    "ie > 9"
+  ]
+}
