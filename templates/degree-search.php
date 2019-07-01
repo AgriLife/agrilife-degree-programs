@@ -9,6 +9,7 @@
  */
 
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
+add_action( 'genesis_before_content', 'degree_search_filters' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
 add_filter( 'genesis_attr_site-inner', 'add_layout_container_class' );
 add_filter( 'genesis_attr_content-sidebar-wrap', 'degree_content_sidebar_wrap_attr' );
@@ -48,6 +49,63 @@ function degree_content_sidebar_wrap_attr( $attributes ) {
 function degree_content_attr( $attributes ) {
 	$attributes['class'] .= ' cell small-12 medium-8';
 	return $attributes;
+}
+
+/**
+ * Show degree search filters.
+ *
+ * @since 0.1.0
+ * @return void
+ */
+function degree_search_filters() {
+
+	$output = '<div class="cell small-12 medium-4">';
+
+	// Get taxonomies.
+	$departments = get_terms( 'department' );
+	$degreetypes = get_terms( 'degree-type' );
+	$interests   = get_terms( 'interest' );
+	$checkbox    = '<input type="checkbox" id="dept_%s" value="%s"><label for="dept_%s"> %s</label>';
+
+	// Taxonomy search bar output.
+	$output .= '<h2>Departments</h2>';
+	foreach ( $departments as $key => $value ) {
+		$output .= sprintf(
+			$checkbox,
+			$value->term_id,
+			$value->slug,
+			$value->term_id,
+			$value->name
+		);
+	}
+
+	$output .= '<h2>Degree Types</h2>';
+	foreach ( $degreetypes as $key => $value ) {
+		$output .= sprintf(
+			$checkbox,
+			$value->term_id,
+			$value->slug,
+			$value->term_id,
+			$value->name
+		);
+	}
+
+	$output .= '<h2>Interests</h2>';
+	foreach ( $interests as $key => $value ) {
+		$output .= sprintf(
+			$checkbox,
+			$value->term_id,
+			$value->slug,
+			$value->term_id,
+			$value->name
+		);
+	}
+
+	$output .= '</div>';
+
+	// Output.
+	echo wp_kses_post( $output );
+
 }
 
 /**
