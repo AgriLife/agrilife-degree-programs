@@ -77,7 +77,7 @@ class DegreePrograms {
 			'agrilife-degree-program',
 			array(),
 			'dashicons-portfolio',
-			array( 'title', 'editor', 'genesis-seo', 'genesis-scripts' ),
+			array( 'title', 'editor', 'thumbnail', 'genesis-seo', 'genesis-scripts' ),
 			array( 'single' => 'single-degree-program.php' )
 		);
 
