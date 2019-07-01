@@ -57,6 +57,12 @@ class DegreePrograms {
 		require_once AGDPR_DIR_PATH . 'src/class-assets.php';
 		$assets = new \DegreePrograms\Assets();
 
+		/* Add taxonomies */
+		require_once AGDPR_DIR_PATH . 'src/class-taxonomy.php';
+		new \DegreePrograms\Taxonomy( 'Department', 'department', 'degree-program' );
+		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program' );
+		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program' );
+
 		/* Add custom post type */
 		require_once AGDPR_DIR_PATH . 'src/class-posttype.php';
 		$post_type = new \DegreePrograms\PostType(
