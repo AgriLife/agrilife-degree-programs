@@ -8,6 +8,7 @@
  * @subpackage agrilife-degree-programs/templates
  */
 
+add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
 
 /**
