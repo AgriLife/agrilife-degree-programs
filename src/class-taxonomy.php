@@ -83,11 +83,13 @@ class Taxonomy {
 		// Taxonomy arguments.
 		$args = array_merge(
 			array(
-				'labels'            => $labels,
-				'hierarchical'      => true,
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'rewrite'           => array( 'slug' ),
+				'labels'             => $labels,
+				'show_ui'            => true,
+				'show_admin_column'  => true,
+				'rewrite'            => array( 'slug' => $slug ),
+				'show_in_rest'       => true,
+				'show_in_quick_edit' => true,
+				'show_admin_column'  => true,
 			),
 			$user_args
 		);
