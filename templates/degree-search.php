@@ -116,7 +116,32 @@ function degree_search_filters() {
  */
 function degree_search_content() {
 
+	$output = '';
+
+	// Get degrees.
 	$degrees = new WP_Query( array( 'post_type' => 'degree-program' ) );
+
+	// Post list.
+	foreach ( $degrees->posts as $key => $value ) {
+
+		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
+		$class = [];
+
+		foreach ( $terms as $term ) {
+			$class[] = "term-{$term->taxonomy} {$term->taxonomy}-{$term->slug}";
+		}
+
+		$output .= sprintf(
+			'<a class="%s" href="%s">%s<div>%s</div></a>',
+			implode( ' ', $class ),
+			get_permalink( $value->ID ),
+			get_the_post_thumbnail( $value->ID, 'thumbnail' ),
+			$value->post_title
+		);
+	}
+
+	// Output.
+	echo wp_kses_post( $output );
 
 }
 
