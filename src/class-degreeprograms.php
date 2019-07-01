@@ -41,6 +41,8 @@ class DegreePrograms {
 	 */
 	private function __construct() {
 
+		$this->register_templates();
+
 		add_action( 'init', array( $this, 'init' ) );
 
 	}
@@ -84,6 +86,20 @@ class DegreePrograms {
 			flush_rewrite_rules();
 			delete_option( 'af4_agrilife_flush_rewrite_rules_flag' );
 		}
+
+	}
+
+	/**
+	 * Initialize page templates
+	 *
+	 * @since 0.1.0
+	 * @return void
+	 */
+	private function register_templates() {
+
+		require_once AGDPR_DIR_PATH . '/src/class-pagetemplate.php';
+		$search = new \DegreePrograms\PageTemplate( AGDPR_TEMPLATE_PATH, 'degree-search.php', 'Degree Search' );
+		$search->register();
 
 	}
 
