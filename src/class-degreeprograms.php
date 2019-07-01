@@ -41,8 +41,6 @@ class DegreePrograms {
 	 */
 	private function __construct() {
 
-		$this->register_templates();
-
 		add_action( 'init', array( $this, 'init' ) );
 
 	}
