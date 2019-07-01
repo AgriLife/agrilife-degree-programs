@@ -4,10 +4,8 @@
 
 @import "foundation";
 
-div {
-	@include xy-grid;
-
-	.cell {
-		@include xy-cell(6);
+.full-width-content .content-sidebar-wrap .content {
+	@include breakpoint(medium) {
+		width: 66.67%;
 	}
 }
