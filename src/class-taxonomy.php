@@ -68,15 +68,15 @@ class Taxonomy {
 		$labels = array(
 			'name'              => $plural,
 			'singular_name'     => $singular,
-			'search_items'      => __( 'Search', 'af4-agrilife-org' ) . " $plural",
-			'all_items'         => __( 'All', 'af4-agrilife-org' ) . " $plural",
-			'parent_item'       => __( 'Parent', 'af4-agrilife-org' ) . " $singular",
-			'parent_item_colon' => __( 'Parent', 'af4-agrilife-org' ) . " {$singular}:",
-			'edit_item'         => __( 'Edit', 'af4-agrilife-org' ) . " $singular",
-			'update_item'       => __( 'Update', 'af4-agrilife-org' ) . " $singular",
-			'add_new_item'      => __( 'Add New', 'af4-agrilife-org' ) . " $singular",
+			'search_items'      => __( 'Search', 'agrilife-degree-programs' ) . " $plural",
+			'all_items'         => __( 'All', 'agrilife-degree-programs' ) . " $plural",
+			'parent_item'       => __( 'Parent', 'agrilife-degree-programs' ) . " $singular",
+			'parent_item_colon' => __( 'Parent', 'agrilife-degree-programs' ) . " {$singular}:",
+			'edit_item'         => __( 'Edit', 'agrilife-degree-programs' ) . " $singular",
+			'update_item'       => __( 'Update', 'agrilife-degree-programs' ) . " $singular",
+			'add_new_item'      => __( 'Add New', 'agrilife-degree-programs' ) . " $singular",
 			/* translators: placeholder is the singular taxonomy name */
-			'new_item_name'     => sprintf( esc_html__( 'New %d Name', 'af4-agrilife-org' ), $singular ),
+			'new_item_name'     => sprintf( esc_html__( 'New %d Name', 'agrilife-degree-programs' ), $singular ),
 			'menu_name'         => $plural,
 		);
 
@@ -175,7 +175,7 @@ class Taxonomy {
 					}
 
 					?>
-					<p class="description"><?php esc_html_e( 'Enter a value for this field', 'af4-agrilife-org' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Enter a value for this field', 'agrilife-degree-programs' ); ?></p>
 				</td>
 			</tr>
 			<?php
