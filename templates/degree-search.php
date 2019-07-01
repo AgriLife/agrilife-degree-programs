@@ -10,6 +10,45 @@
 
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
+add_filter( 'genesis_attr_site-inner', 'add_layout_container_class' );
+add_filter( 'genesis_attr_content-sidebar-wrap', 'degree_content_sidebar_wrap_attr' );
+add_filter( 'genesis_attr_content', 'degree_content_attr' );
+
+/**
+ * Add class name to site-inner element
+ *
+ * @since 0.1.4
+ * @param array $attributes HTML attributes.
+ * @return array
+ */
+function add_layout_container_class( $attributes ) {
+	$attributes['class'] .= ' layout-container';
+	return $attributes;
+}
+
+/**
+ * Add class name to content-sidebar-wrap element
+ *
+ * @since 0.1.4
+ * @param array $attributes HTML attributes.
+ * @return array
+ */
+function degree_content_sidebar_wrap_attr( $attributes ) {
+	$attributes['class'] .= ' grid-x';
+	return $attributes;
+}
+
+/**
+ * Add class name to content element
+ *
+ * @since 0.1.4
+ * @param array $attributes HTML attributes.
+ * @return array
+ */
+function degree_content_attr( $attributes ) {
+	$attributes['class'] .= ' cell small-12 medium-8';
+	return $attributes;
+}
 
 /**
  * Provide the post body content.
