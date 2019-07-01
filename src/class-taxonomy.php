@@ -51,7 +51,6 @@ class Taxonomy {
 	 * @param string $name The taxonomy name.
 	 * @param string $slug The taxonomy slug.
 	 * @param string $post_slug The slug of the post type where the taxonomy will be added.
-	 * @param string $tag The plugin namespace for translations.
 	 * @param array  $user_args The arguments for taxonomy registration. Accepts $args from
 	 *                         the WordPress core register_taxonomy function.
 	 * @param array  $meta Array (single or multidimensional) of custom fields to add to a
@@ -59,7 +58,7 @@ class Taxonomy {
 	 * @param string $template The template file path for the taxonomy archive page.
 	 * @return void
 	 */
-	public function __construct( $name, $slug, $post_slug, $tag, $user_args = array(), $meta = array(), $template = '' ) {
+	public function __construct( $name, $slug, $post_slug, $user_args = array(), $meta = array(), $template = '' ) {
 
 		$this->slug = $slug;
 		$singular   = $name;
