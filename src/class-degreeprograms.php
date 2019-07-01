@@ -57,11 +57,11 @@ class DegreePrograms {
 
 		/* Set up asset files */
 		require_once AGDPR_DIR_PATH . 'src/class-assets.php';
-		$ado_assets = new \Agrilife\Assets();
+		$assets = new \DegreePrograms\Assets();
 
 		/* Add custom post type for Exceptional Items */
 		require_once AGDPR_DIR_PATH . 'src/class-posttype.php';
-		$post_type = new \Agrilife\PostType(
+		$post_type = new \DegreePrograms\PostType(
 			array(
 				'singular' => 'Degree Program',
 				'plural'   => 'Degree Programs',
