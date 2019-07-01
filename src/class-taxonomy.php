@@ -28,6 +28,24 @@ class Taxonomy {
 	protected $slug;
 
 	/**
+	 * Post type slug this taxonomy is registered to
+	 *
+	 * @since  0.1.0
+	 * @access protected
+	 * @var    slug $post_slug Stores post type slug value
+	 */
+	protected $post_slug;
+
+	/**
+	 * Singular name this taxonomy is given
+	 *
+	 * @since  0.1.0
+	 * @access protected
+	 * @var    name $singular_name Stores taxonomy singular name
+	 */
+	protected $singular_name;
+
+	/**
 	 * Taxonomy meta boxes
 	 *
 	 * @since  0.1.0
@@ -60,9 +78,11 @@ class Taxonomy {
 	 */
 	public function __construct( $name, $slug, $post_slug, $user_args = array(), $meta = array(), $template = '' ) {
 
-		$this->slug = $slug;
-		$singular   = $name;
-		$plural     = $name . 's';
+		$this->slug          = $slug;
+		$this->post_slug     = $post_slug;
+		$this->singular_name = $name;
+		$singular            = $name;
+		$plural              = $name . 's';
 
 		// Taxonomy labels.
 		$labels = array(
@@ -115,6 +135,10 @@ class Taxonomy {
 			$this->template = $template;
 			add_filter( 'template_include', array( $this, 'custom_template' ) );
 		}
+
+		// Make taxonomy sortable.
+		add_filter( "manage_edit-{$post_slug}_sortable_columns", array( $this, 'register_sortable_columns' ) );
+		add_filter( 'posts_orderby', array( $this, 'taxonomy_orderby' ), 10, 2 );
 
 	}
 
@@ -231,6 +255,51 @@ class Taxonomy {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Make this taxonomy sortable from the post type dashboard list page.
+	 *
+	 * @param array $columns The list of taxonomy columns sortable on this post type's list page.
+	 * @return array
+	 */
+	public function register_sortable_columns( $columns ) {
+
+		$columns[ "taxonomy-{$this->slug}" ] = "taxonomy-{$this->slug}";
+
+		return $columns;
+	}
+
+
+	/**
+	 * Sort this taxonomy in the dashboard by the taxonomy text value.
+	 *
+	 * @param string $orderby The SQL query which orders posts.
+	 * @param object $wp_query The query object.
+	 * @return array
+	 */
+	public function taxonomy_orderby( $orderby, $wp_query ) {
+
+		global $wpdb;
+
+		// If this taxonomy is the orderby parameter, then update the SQL query.
+		if ( isset( $wp_query->query['orderby'] ) && "taxonomy-{$this->slug}" === $wp_query->query['orderby'] ) {
+
+			$orderby  = "(
+	      SELECT GROUP_CONCAT(name ORDER BY name ASC)
+	      FROM $wpdb->term_relationships
+	      INNER JOIN $wpdb->term_taxonomy USING (term_taxonomy_id)
+	      INNER JOIN $wpdb->terms USING (term_id)
+	      WHERE $wpdb->posts.ID = object_id
+	      AND taxonomy = '{$this->slug}'
+	      GROUP BY object_id
+	    ) ";
+			$orderby .= ( 'ASC' === strtoupper( $wp_query->get( 'order' ) ) ) ? 'ASC' : 'DESC';
+
+		}
+
+		return $orderby;
+
 	}
 
 }
