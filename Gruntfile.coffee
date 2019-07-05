@@ -3,9 +3,10 @@ module.exports = (grunt) ->
     pkg: @file.readJSON('package.json')
     watch:
       files: [
-        'css/src/*.scss'
+        'css/src/*.scss',
+        'js/src/*.coffee'
       ]
-      tasks: ['sasslint', 'sass:dev']
+      tasks: ['sasslint', 'sass:dev', 'coffee']
     postcss:
       pkg:
         options:
@@ -45,6 +46,12 @@ module.exports = (grunt) ->
       options:
         configFile: '.sass-lint.yml'
       target: ['css/src/**/*.s+(a|c)ss']
+    coffee:
+      compile:
+        options:
+          bare: true
+        files:
+          'js/degree-search.js': 'js/src/degree-search.coffee'
     compress:
       main:
         options:
@@ -53,6 +60,7 @@ module.exports = (grunt) ->
           {src: ['css/*.css']},
           {src: ['src/*.php']},
           {src: ['templates/*.php']},
+          {src: ['js/*.js']},
           {src: ['agrilife-degree-programs.php']},
           {src: ['readme.md']},
         ]
@@ -60,11 +68,12 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-sass'
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-contrib-compress'
+  @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-sass-lint'
   @loadNpmTasks 'grunt-postcss'
 
-  @registerTask 'default', ['sass:pkg', 'postcss:pkg']
-  @registerTask 'develop', ['sasslint', 'sass:dev', 'postcss:dev']
+  @registerTask 'default', ['sass:pkg', 'postcss:pkg', 'coffee']
+  @registerTask 'develop', ['sasslint', 'sass:dev', 'postcss:dev', 'coffee']
   @registerTask 'release', ['compress', 'makerelease']
   @registerTask 'makerelease', 'Set release branch for use in the release task', ->
     done = @async()
