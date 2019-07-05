@@ -33,7 +33,37 @@ function degree_content_attr( $attributes ) {
  */
 function degree_search_filters() {
 
-	$output = '<div class="cell small-12 medium-4">';
+	$id               = 'degree-sidebar-search';
+	$sidebar_defaults = apply_filters(
+		'genesis_widget_area_defaults',
+		array(
+			'before'              => genesis_markup(
+				array(
+					'open'    => '<aside class="widget-area cell small-12 medium-4">' . genesis_sidebar_title( $id ),
+					'context' => 'widget-area-wrap',
+					'echo'    => false,
+					'params'  => array(
+						'id' => $id,
+					),
+				)
+			),
+			'after'               => genesis_markup(
+				array(
+					'close'   => '</aside>',
+					'context' => 'widget-area-wrap',
+					'echo'    => false,
+				)
+			),
+			'default'             => '',
+			'show_inactive'       => 0,
+			'before_sidebar_hook' => 'genesis_before_' . $id . '_widget_area',
+			'after_sidebar_hook'  => 'genesis_after_' . $id . '_widget_area',
+		),
+		'degree-sidebar-search',
+		array()
+	);
+
+	$output = $sidebar_defaults['before'];
 
 	// Get taxonomies.
 	$departments = get_terms( 'department' );
@@ -75,7 +105,7 @@ function degree_search_filters() {
 		);
 	}
 
-	$output .= '</div>';
+	$output .= $sidebar_defaults['after'];
 
 	// Output.
 	echo wp_kses_post( $output );
