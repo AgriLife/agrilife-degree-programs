@@ -11,19 +11,6 @@
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
 add_action( 'genesis_before_content', 'degree_search_filters' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
-add_filter( 'genesis_attr_content', 'degree_content_attr' );
-
-/**
- * Add class name to content element
- *
- * @since 0.1.4
- * @param array $attributes HTML attributes.
- * @return array
- */
-function degree_content_attr( $attributes ) {
-	$attributes['class'] .= ' cell small-12 medium-8';
-	return $attributes;
-}
 
 /**
  * Show degree search filters.
