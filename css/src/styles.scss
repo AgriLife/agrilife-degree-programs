@@ -10,3 +10,35 @@
 		width: 66.67%;
 	}
 }
+
+.degrees {
+	.degree {
+		@include xy-cell( 3, $gutters: $grid-margin-gutters / 2, $gutter-position: right );
+		position: relative;
+		max-width: 150px;
+		height: 125px;
+		overflow: hidden;
+		margin: {
+			right: $grid-margin-gutters / 2;
+			bottom: $grid-padding-gutters / 2;
+		}
+
+		div {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			top: 50%;
+			background-color: rgba($dark-blue, .8);
+			padding: $grid-padding-gutters / 4;
+			color: $white;
+			text-align: right;
+			line-height: 1.1;
+			font-size: 0.9rem;
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}

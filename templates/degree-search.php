@@ -26,7 +26,7 @@ function degree_search_filters() {
 		array(
 			'before'              => genesis_markup(
 				array(
-					'open'    => '<aside class="widget-area cell small-12 medium-4">' . genesis_sidebar_title( $id ),
+					'open'    => '<aside class="widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ),
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 					'params'  => array(
@@ -56,41 +56,50 @@ function degree_search_filters() {
 	$departments = get_terms( 'department' );
 	$degreetypes = get_terms( 'degree-type' );
 	$interests   = get_terms( 'interest' );
-	$checkbox    = '<input type="checkbox" id="dept_%s" value="%s"><label for="dept_%s"> %s</label>';
+	$checkbox    = '<li><input class="degree-filter" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
 
 	// Taxonomy search bar output.
 	$output .= '<h2>Departments</h2>';
+	$output .= '<ul class="reset">';
 	foreach ( $departments as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
 			$value->term_id,
+			'department',
 			$value->slug,
 			$value->term_id,
 			$value->name
 		);
 	}
+	$output .= '</ul>';
 
 	$output .= '<h2>Degree Types</h2>';
+	$output .= '<ul class="reset">';
 	foreach ( $degreetypes as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
 			$value->term_id,
+			'degree-type',
 			$value->slug,
 			$value->term_id,
 			$value->name
 		);
 	}
+	$output .= '</ul>';
 
 	$output .= '<h2>Interests</h2>';
+	$output .= '<ul class="reset">';
 	foreach ( $interests as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
 			$value->term_id,
+			'interest',
 			$value->slug,
 			$value->term_id,
 			$value->name
 		);
 	}
+	$output .= '</ul>';
 
 	$output .= $sidebar_defaults['after'];
 
@@ -107,7 +116,7 @@ function degree_search_filters() {
  */
 function degree_search_content() {
 
-	$output = '';
+	$output = '<div class="grid-container full"><div class="degrees grid-x">';
 
 	// Get degrees.
 	$degrees = new WP_Query( array( 'post_type' => 'degree-program' ) );
@@ -116,7 +125,7 @@ function degree_search_content() {
 	foreach ( $degrees->posts as $key => $value ) {
 
 		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
-		$class = [];
+		$class = ['degree','cell','medium-3','small-6'];
 
 		foreach ( $terms as $term ) {
 			$class[] = "term-{$term->taxonomy} {$term->taxonomy}-{$term->slug}";
@@ -130,6 +139,8 @@ function degree_search_content() {
 			$value->post_title
 		);
 	}
+
+	$output .= '</div></div>';
 
 	// Output.
 	echo wp_kses_post( $output );
