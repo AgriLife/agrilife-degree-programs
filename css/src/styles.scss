@@ -3,6 +3,7 @@
 @charset "utf-8";
 
 @import "foundation";
+@import "settings";
 
 .full-width-content .content-sidebar-wrap .content {
 	@include breakpoint(medium) {
