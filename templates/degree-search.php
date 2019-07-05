@@ -104,7 +104,29 @@ function degree_search_filters() {
 	$output .= $sidebar_defaults['after'];
 
 	// Output.
-	echo wp_kses_post( $output );
+	echo wp_kses(
+		$output,
+		array(
+			'aside' => array(
+				'class' => array(),
+			),
+			'ul'    => array(
+				'class' => array(),
+			),
+			'li'    => array(),
+			'h2'    => array(),
+			'label' => array(
+				'for' => array(),
+			),
+			'input' => array(
+				'class'    => array(),
+				'onchange' => array(),
+				'type'     => array(),
+				'id'       => array(),
+				'value'    => array(),
+			),
+		)
+	);
 
 }
 
@@ -125,7 +147,7 @@ function degree_search_content() {
 	foreach ( $degrees->posts as $key => $value ) {
 
 		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
-		$class = ['degree','cell','medium-3','small-6'];
+		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
 
 		foreach ( $terms as $term ) {
 			$class[] = "term-{$term->taxonomy} {$term->taxonomy}-{$term->slug}";
