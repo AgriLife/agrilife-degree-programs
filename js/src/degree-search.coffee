@@ -8,7 +8,7 @@
     $degrees = $ '.degree'
     if $activeInputs.length is 0
       $degrees.filter ':hidden'
-        .show()
+        .fadeIn()
       $inputs.not ':enabled'
         .removeAttr 'disabled'
     else
@@ -19,9 +19,9 @@
       selected = activeInputClasses.join ''
       $activeDegrees = $degrees.filter selected
       # Show or hide degrees.
-      $activeDegrees.show()
+      $activeDegrees.fadeIn()
       $degrees.not selected
-        .hide()
+        .fadeOut()
       # Find which taxonomies are present in active degrees.
       activeTaxonomies = []
       console.log selected
