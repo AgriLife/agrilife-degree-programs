@@ -56,7 +56,7 @@ function degree_search_filters() {
 	$departments = get_terms( 'department' );
 	$degreetypes = get_terms( 'degree-type' );
 	$interests   = get_terms( 'interest' );
-	$checkbox    = '<li><input class="degree-filter" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
+	$checkbox    = '<li><input class="degree-filter %s" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
 
 	// Taxonomy search bar output.
 	$output .= '<h2>Departments</h2>';
@@ -64,6 +64,7 @@ function degree_search_filters() {
 	foreach ( $departments as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
+			"department-{$value->slug}",
 			$value->term_id,
 			'department',
 			$value->slug,
@@ -78,6 +79,7 @@ function degree_search_filters() {
 	foreach ( $degreetypes as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
+			"degree-type-{$value->slug}",
 			$value->term_id,
 			'degree-type',
 			$value->slug,
@@ -92,6 +94,7 @@ function degree_search_filters() {
 	foreach ( $interests as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
+			"interest-{$value->slug}",
 			$value->term_id,
 			'interest',
 			$value->slug,
@@ -150,7 +153,7 @@ function degree_search_content() {
 		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
 
 		foreach ( $terms as $term ) {
-			$class[] = "term-{$term->taxonomy} {$term->taxonomy}-{$term->slug}";
+			$class[] = "{$term->taxonomy}-{$term->slug}";
 		}
 
 		$output .= sprintf(
