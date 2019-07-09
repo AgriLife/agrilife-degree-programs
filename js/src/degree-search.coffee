@@ -2,56 +2,44 @@
   'use strict'
   # Make taxonomy checkboxes show and hide degrees.
 
-  $inputs = $ 'input.degree-filter'
-  $degrees = $ '.degree'
-  $inputs.on 'change', ->
-    if this.checked
-      $unmatched = $degrees.filter ':not(.' + this.className + ')'
-      $unmatched.hide();
+  $update = ->
+    $inputs = $ 'input.degree-filter'
+    $activeInputs = $inputs.filter ':checked'
+    $degrees = $ '.degree'
+    if $activeInputs.length is 0
+      $degrees.filter ':hidden'
+        .show()
+      $inputs.not ':enabled'
+        .removeAttr 'disabled'
     else
-      $active_filters = $inputs.filter ':checked'
-      if $active_filters.length > 0
-        $visible = $ '.degree.' + this.className + ':visible'
-      else
-        $degrees.filter(':hidden').show()
-
-    console.log this
-  #   return
-
-  # $header = $ '.site-header [data-sticky]'
-  # $content = $ '#genesis-content'
-  # $sticky = $ '#genesis-content .right [data-sticky]'
-
-  # transition = 15 + 1000 * parseFloat(
-  #   $ '.site-header .layout-container'
-  #   .css 'transition-duration'
-  #   .split(', ')[0]
-  # )
-  # fontSize = parseFloat $sticky.css 'font-size'
-  # spaceBelowHeader = $content.offset().top - $header.height()
-
-  # $ window
-  #   .one 'load.zf.sticky', ->
-  #     calcStickyTop()
-
-  # calcStickyTop = ->
-  #   topOffset = $header.height() + spaceBelowHeader
-  #   ems = .1 * Math.ceil topOffset / fontSize * 10
-
-  #   $sticky.attr 'data-margin-top', ems
-  #   $sticky.data 'marginTop', ems
-  #   if $sticky.hasClass 'is-stuck'
-  #     $sticky.css 'margin-top', ems + 'em'
-  #   if $sticky.data 'zfPlugin'
-  #     $sticky.data('zfPlugin').options.marginTop = ems
-  #   return
-
-  # $header.on 'sticky.zf.stuckto:top', ->
-  #   window.setTimeout calcStickyTop, transition
-  #   return
-  # $header.on 'sticky.zf.unstuckfrom:top', ->
-  #   window.setTimeout calcStickyTop, transition
-  #   return
-
+      # Decide which degrees to show.
+      activeInputClasses = []
+      $activeInputs.each ( index ) ->
+        activeInputClasses.push '.' + this.value
+      selected = activeInputClasses.join ''
+      $activeDegrees = $degrees.filter selected
+      # Show or hide degrees.
+      $activeDegrees.show()
+      $degrees.not selected
+        .hide()
+      # Find which taxonomies are present in active degrees.
+      activeTaxonomies = []
+      console.log selected
+      $activeDegrees.each ->
+        taxonomies = this.className.match /(degree-type|department|interest)-\S+/g
+        j = 0
+        while j < taxonomies.length
+          if taxonomies[j] not in activeTaxonomies then activeTaxonomies.push '.' + taxonomies[j]
+          j++
+      activeTaxonomies = activeTaxonomies.join ','
+      console.log activeTaxonomies
+      $inputs.filter activeTaxonomies
+        .not ':enabled'
+        .removeAttr 'disabled'
+      $inputs.not activeTaxonomies
+        .not ':disabled'
+        .attr 'disabled', true
+  $update()
+  $('input.degree-filter').on 'change', $update
   return
 ) jQuery
