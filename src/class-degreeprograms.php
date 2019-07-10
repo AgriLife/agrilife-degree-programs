@@ -82,6 +82,11 @@ class DegreePrograms {
 			array( 'single' => 'single-degree-program.php' )
 		);
 
+		// Add page template custom fields.
+		if ( class_exists( 'acf' ) ) {
+			require_once AGDPR_DIR_PATH . 'fields/fields.php';
+		}
+
 		/* Flush rewrite rules on plugin installation */
 		if ( get_option( 'af4_agrilife_flush_rewrite_rules_flag' ) ) {
 			flush_rewrite_rules();
