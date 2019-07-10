@@ -78,8 +78,7 @@ class DegreePrograms {
 			'agrilife-degree-program',
 			array(),
 			'dashicons-portfolio',
-			array( 'title', 'editor', 'thumbnail', 'genesis-seo', 'genesis-scripts' ),
-			array( 'single' => 'single-degree-program.php' )
+			array( 'title', 'editor', 'thumbnail', 'genesis-seo', 'genesis-scripts' )
 		);
 
 		// Add page template custom fields.
