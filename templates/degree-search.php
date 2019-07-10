@@ -151,17 +151,27 @@ function degree_search_content() {
 
 		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
 		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
+		$link  = get_field( 'degree_program', $value->ID );
+		$href  = $link ? " href=\"{$link['link']}\"" : '';
+		$tag   = $link ? 'a' : 'div';
+		$open  = sprintf(
+			'<%s class="%s"%s>',
+			$tag,
+			implode( ' ', $class ),
+			$href
+		);
+		$close = "</{$tag}>";
 
 		foreach ( $terms as $term ) {
 			$class[] = "{$term->taxonomy}-{$term->slug}";
 		}
 
 		$output .= sprintf(
-			'<a class="%s" href="%s">%s<div>%s</div></a>',
-			implode( ' ', $class ),
-			get_permalink( $value->ID ),
+			'%s%s<div>%s</div>%s',
+			$open,
 			get_the_post_thumbnail( $value->ID, 'thumbnail' ),
-			$value->post_title
+			$value->post_title,
+			$close
 		);
 	}
 
