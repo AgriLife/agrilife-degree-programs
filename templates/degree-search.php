@@ -52,15 +52,53 @@ function degree_search_filters() {
 
 	$output = $sidebar_defaults['before'];
 
-	// Get taxonomies.
-	$departments = get_terms( 'department' );
-	$degreetypes = get_terms( 'degree-type' );
-	$interests   = get_terms( 'interest' );
-	$checkbox    = '<li><input class="degree-filter %s" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
+	// Get taxonomies of posts which have a Level taxonomy of Undergrad.
+	$args   = array(
+		'post_type'      => 'degree-program',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+	);
+	$fields = get_field( 'degree_program_search' );
+	$level  = $fields['degree_level'];
+
+	if ( $level ) {
+
+		$level             = $level->slug;
+		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			array(
+				'taxonomy' => 'level',
+				'field'    => 'slug',
+				'terms'    => $level,
+			),
+		);
+
+	}
+
+	$query       = new WP_Query( $args );
+	$post_ids    = $query->posts;
+	$departments = get_terms(
+		array(
+			'taxonomy'   => 'department',
+			'object_ids' => $post_ids,
+		)
+	);
+	$degreetypes = get_terms(
+		array(
+			'taxonomy'   => 'degree-type',
+			'object_ids' => $post_ids,
+		)
+	);
+	$interests   = get_terms(
+		array(
+			'taxonomy'   => 'interest',
+			'object_ids' => $post_ids,
+		)
+	);
 
 	// Taxonomy search bar output.
-	$output .= '<h2>Departments</h2>';
-	$output .= '<ul class="reset">';
+	$checkbox = '<li><input class="degree-filter %s" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
+	$output  .= '<h2>Departments</h2>';
+	$output  .= '<ul class="reset">';
 	foreach ( $departments as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -144,7 +182,26 @@ function degree_search_content() {
 	$output = '<div class="grid-container full"><div class="degrees grid-x">';
 
 	// Get degrees.
-	$degrees = new WP_Query( array( 'post_type' => 'degree-program' ) );
+	$args   = array(
+		'post_type' => 'degree-program',
+	);
+	$fields = get_field( 'degree_program_search' );
+	$level  = $fields['degree_level'];
+
+	if ( $level ) {
+
+		$level             = $level->slug;
+		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			array(
+				'taxonomy' => 'level',
+				'field'    => 'slug',
+				'terms'    => $level,
+			),
+		);
+
+	}
+
+	$degrees = new WP_Query( $args );
 
 	// Post list.
 	foreach ( $degrees->posts as $key => $value ) {
@@ -154,6 +211,9 @@ function degree_search_content() {
 		$link  = get_field( 'degree_program', $value->ID );
 		$href  = $link ? " href=\"{$link['link']}\"" : '';
 		$tag   = $link ? 'a' : 'div';
+		foreach ( $terms as $term ) {
+			$class[] = "{$term->taxonomy}-{$term->slug}";
+		}
 		$open  = sprintf(
 			'<%s class="%s"%s>',
 			$tag,
@@ -161,10 +221,6 @@ function degree_search_content() {
 			$href
 		);
 		$close = "</{$tag}>";
-
-		foreach ( $terms as $term ) {
-			$class[] = "{$term->taxonomy}-{$term->slug}";
-		}
 
 		$output .= sprintf(
 			'%s%s<div>%s</div>%s',

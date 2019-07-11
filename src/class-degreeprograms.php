@@ -84,6 +84,7 @@ class DegreePrograms {
 		// Add page template custom fields.
 		if ( class_exists( 'acf' ) ) {
 			require_once AGDPR_DIR_PATH . 'fields/degree-fields.php';
+			require_once AGDPR_DIR_PATH . 'fields/search-fields.php';
 		}
 
 		/* Flush rewrite rules on plugin installation */
