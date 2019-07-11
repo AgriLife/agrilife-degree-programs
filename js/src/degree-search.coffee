@@ -24,7 +24,6 @@
         .fadeOut()
       # Find which taxonomies are present in active degrees.
       activeTaxonomies = []
-      console.log selected
       $activeDegrees.each ->
         taxonomies = this.className.match /(degree-type|department|interest)-\S+/g
         j = 0
@@ -32,7 +31,6 @@
           if taxonomies[j] not in activeTaxonomies then activeTaxonomies.push '.' + taxonomies[j]
           j++
       activeTaxonomies = activeTaxonomies.join ','
-      console.log activeTaxonomies
       $inputs.filter activeTaxonomies
         .not ':enabled'
         .removeAttr 'disabled'
