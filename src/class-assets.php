@@ -84,7 +84,7 @@ class Assets {
 		wp_register_script(
 			'agrilife-degree-programs',
 			AGDPR_DIR_URL . '/js/degree-search.js',
-			array( 'jquery' ),
+			array( 'jquery', 'foundation' ),
 			filemtime( AGDPR_DIR_PATH . 'js/degree-search.js' ),
 			true
 		);
@@ -99,7 +99,11 @@ class Assets {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( 'agrilife-degree-programs' );
+		if ( is_page_template( 'degree-search.php' ) ) {
+
+			wp_enqueue_script( 'agrilife-degree-programs' );
+
+		}
 
 	}
 
