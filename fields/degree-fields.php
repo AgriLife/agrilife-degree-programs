@@ -2,7 +2,7 @@
 /**
  * The file that defines the custom fields
  *
- * @link       https://github.com/agrilife/agrilife-degree-programs/blob/master/fields/fields.php
+ * @link       https://github.com/agrilife/agrilife-degree-programs/blob/master/fields/degree-fields.php
  * @since      0.1.0
  * @package    agrilife-degree-programs
  * @subpackage agrilife-degree-programs/fields
