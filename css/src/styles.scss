@@ -5,23 +5,71 @@
 @import "foundation";
 @import "settings";
 
+h1 {
+	margin-bottom: $grid-margin-gutters;
+}
+
 .full-width-content .content-sidebar-wrap .content {
 	@include breakpoint(medium) {
 		width: 66.67%;
 	}
 }
 
+#degree-filters {
+	hyphens: auto;
+	margin-bottom: $grid-margin-gutters;
+
+	input {
+		margin: 0 .5rem;
+	}
+
+	label {
+		line-height: 1.4;
+	}
+
+	.item > .cell:first-child {
+		line-height: 1;
+	}
+
+	ul.menu:not(.is-accordion-submenu) {
+		display: none;
+	}
+
+	> li {
+		a {
+			background-color: $gray-lighter;
+			padding-right: 2rem;
+
+			&:hover {
+				color: $maroon;
+			}
+		}
+
+		ul {
+			margin: $grid-margin-gutters / 4 0;
+
+			&.last {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&.accordion-menu .is-accordion-submenu-parent:not(.has-submenu-toggle) > a::after {
+		border-color: $maroon transparent transparent;
+	}
+}
+
 .degrees {
+	margin-left: 0 - $grid-padding-gutters / 4;
+	margin-right: 0 - $grid-padding-gutters / 4;
+
 	.degree {
-		@include xy-cell( 3, $gutters: $grid-margin-gutters / 2, $gutter-position: right );
+		@include xy-cell( 3, $gutters: $grid-padding-gutters / 2 );
 		position: relative;
 		max-width: 150px;
 		height: 125px;
 		overflow: hidden;
-		margin: {
-			right: $grid-margin-gutters / 2;
-			bottom: $grid-padding-gutters / 2;
-		}
+		margin-bottom: $grid-padding-gutters / 2;
 
 		div {
 			position: absolute;

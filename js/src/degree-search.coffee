@@ -1,9 +1,9 @@
 (($) ->
   'use strict'
-  # Make taxonomy checkboxes show and hide degrees.
 
+  # Make taxonomy checkboxes show and hide degrees.
   $update = ->
-    $inputs = $ 'input.degree-filter'
+    $inputs = $ '#degree-filters input'
     $activeInputs = $inputs.filter ':checked'
     $degrees = $ '.degree'
     if $activeInputs.length is 0
@@ -38,7 +38,7 @@
         .not ':disabled'
         .attr 'disabled', true
   $update()
-  $('input.degree-filter').on 'change', $update
+  $('#degree-filters input').on 'change', $update
   # Open the degree search filter menus by default on medium and up.
   if Foundation.MediaQuery.atLeast 'medium'
     $('#degree-filters ul').addClass 'is-active'

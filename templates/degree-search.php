@@ -8,6 +8,7 @@
  * @subpackage agrilife-degree-programs/templates
  */
 
+// Force page layout.
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
 
 // Move page heading before sidebar and content containers.
@@ -17,6 +18,8 @@ remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 add_action( 'genesis_before_content_sidebar_wrap', 'genesis_entry_header_markup_open', 5 );
 add_action( 'genesis_before_content_sidebar_wrap', 'genesis_entry_header_markup_close', 15 );
 add_action( 'genesis_before_content_sidebar_wrap', 'genesis_do_post_title', 11 );
+
+// Page content.
 add_action( 'genesis_before_content', 'degree_search_filters' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
 
@@ -34,7 +37,7 @@ function degree_search_filters() {
 		array(
 			'before'              => genesis_markup(
 				array(
-					'open'    => '<aside class="widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ),
+					'open'    => '<aside class="degree-search-sidebar widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ),
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 					'params'  => array(
@@ -111,9 +114,10 @@ function degree_search_filters() {
 	);
 
 	// Taxonomy search bar output.
-	$checkbox = '<li><input class="degree-filter %s" type="checkbox" id="dept_%s" value="%s-%s"><label for="dept_%s"> %s</label></li>';
-	$output  .= '<h2>Departments</h2>';
-	$output  .= '<ul class="reset">';
+	$checkbox = '<li class="item grid-x"><div class="cell shrink"><input class="%s" type="checkbox" id="dept_%s" value="%s-%s"></div><div class="cell auto"><label for="dept_%s">%s</label></div></li>';
+	$output  .= '<ul id="degree-filters" class="vertical menu accordion-menu" data-accordion-menu>';
+	$output  .= '<li><a href="#">Departments</a>';
+	$output  .= '<ul class="vertical menu">';
 	foreach ( $departments as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -125,10 +129,10 @@ function degree_search_filters() {
 			$value->name
 		);
 	}
-	$output .= '</ul>';
+	$output .= '</ul></li>';
 
-	$output .= '<h2>Degree Types</h2>';
-	$output .= '<ul class="reset">';
+	$output .= '<li><a href="#">Degree Types</a>';
+	$output .= '<ul class="vertical menu">';
 	foreach ( $degreetypes as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -140,10 +144,10 @@ function degree_search_filters() {
 			$value->name
 		);
 	}
-	$output .= '</ul>';
+	$output .= '</ul></li>';
 
-	$output .= '<h2>Interests</h2>';
-	$output .= '<ul class="reset">';
+	$output .= '<li><a href="#">Interests</a>';
+	$output .= '<ul class="vertical menu last">';
 	foreach ( $interests as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -155,7 +159,7 @@ function degree_search_filters() {
 			$value->name
 		);
 	}
-	$output .= '</ul>';
+	$output .= '</ul></li></ul>';
 
 	$output .= $sidebar_defaults['after'];
 
@@ -167,10 +171,20 @@ function degree_search_filters() {
 				'class' => array(),
 			),
 			'ul'    => array(
+				'id'                  => array(),
+				'class'               => array(),
+				'data-accordion-menu' => array(),
+			),
+			'li'    => array(
 				'class' => array(),
 			),
-			'li'    => array(),
-			'h2'    => array(),
+			'a'     => array(
+				'href' => array(),
+			),
+			'div'   => array(
+				'class' => array(),
+			),
+			'h3'    => array(),
 			'label' => array(
 				'for' => array(),
 			),
