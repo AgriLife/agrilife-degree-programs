@@ -61,7 +61,7 @@ class DegreePrograms {
 
 		/* Add taxonomies */
 		require_once AGDPR_DIR_PATH . 'src/class-taxonomy.php';
-		new \DegreePrograms\Taxonomy( 'Level', 'level', 'degree-program' );
+		new \DegreePrograms\Taxonomy( 'Level', 'level', 'degree-program', array( 'hierarchical' => true ) );
 		new \DegreePrograms\Taxonomy( 'Department', 'department', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program' );
