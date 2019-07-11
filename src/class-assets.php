@@ -69,7 +69,11 @@ class Assets {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( 'agrilife-degree-programs' );
+		if ( is_page_template( 'degree-search.php' ) ) {
+
+			wp_enqueue_style( 'agrilife-degree-programs' );
+
+		}
 
 	}
 
