@@ -9,6 +9,14 @@
  */
 
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
+
+// Move page heading before sidebar and content containers.
+remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
+remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+add_action( 'genesis_before_content_sidebar_wrap', 'genesis_entry_header_markup_open', 5 );
+add_action( 'genesis_before_content_sidebar_wrap', 'genesis_entry_header_markup_close', 15 );
+add_action( 'genesis_before_content_sidebar_wrap', 'genesis_do_post_title', 11 );
 add_action( 'genesis_before_content', 'degree_search_filters' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
 
