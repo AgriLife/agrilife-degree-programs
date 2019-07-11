@@ -39,5 +39,8 @@
         .attr 'disabled', true
   $update()
   $('input.degree-filter').on 'change', $update
+  # Open the degree search filter menus by default on medium and up.
+  if Foundation.MediaQuery.atLeast 'medium'
+    $('#degree-filters ul').addClass 'is-active'
   return
 ) jQuery
