@@ -74,8 +74,15 @@ function degree_search_filters() {
 
 	}
 
-	$query       = new WP_Query( $args );
-	$post_ids    = $query->posts;
+	$query    = new WP_Query( $args );
+	$post_ids = $query->posts;
+
+	if ( empty( $post_ids ) ) {
+
+		return;
+
+	}
+
 	$departments = get_terms(
 		array(
 			'taxonomy'   => 'department',
@@ -202,6 +209,12 @@ function degree_search_content() {
 	}
 
 	$degrees = new WP_Query( $args );
+
+	if ( empty( $degrees->posts ) ) {
+
+		return;
+
+	}
 
 	// Post list.
 	foreach ( $degrees->posts as $key => $value ) {
