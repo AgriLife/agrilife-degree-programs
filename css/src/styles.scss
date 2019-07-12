@@ -64,29 +64,40 @@ h1 {
 	margin-right: 0 - $grid-padding-gutters / 4;
 
 	.degree {
-		@include xy-cell( 3, $gutters: $grid-padding-gutters / 2 );
+		@include xy-gutters( $grid-padding-gutters / 2, padding );
 		position: relative;
-		max-width: 150px;
-		height: 125px;
-		overflow: hidden;
 		margin-bottom: $grid-padding-gutters / 2;
 
 		div {
 			position: absolute;
 			bottom: 0;
-			right: 0;
-			left: 0;
+			right: $grid-padding-gutters / 4;
+			left: $grid-padding-gutters / 4;
 			top: 50%;
 			background-color: rgba($dark-blue, .8);
-			padding: $grid-padding-gutters / 4;
+			padding: $grid-padding-gutters / 3 $grid-padding-gutters / 2;
 			color: $white;
 			text-align: right;
 			line-height: 1.1;
-			font-size: 0.8rem;
+			font-size: 4vw;
 			font-weight: bold;
+
+			@include breakpoint(medium) {
+				font-size: 1.5vw;
+			}
 
 			a {
 				text-decoration: none;
+			}
+		}
+
+		@include breakpoint(medium) {
+			@include breakpoint(900px down) {
+				@include xy-cell( 4, false, 0 );
+
+				div {
+					font-size: 2vw;
+				}
 			}
 		}
 	}

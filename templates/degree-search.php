@@ -260,7 +260,7 @@ function degree_search_content() {
 		$output .= sprintf(
 			'%s%s<div>%s</div>%s',
 			$open,
-			get_the_post_thumbnail( $value->ID, 'thumbnail' ),
+			get_the_post_thumbnail( $value->ID, 'medium' ),
 			$value->post_title,
 			$close
 		);
