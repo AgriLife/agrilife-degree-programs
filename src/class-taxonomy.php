@@ -140,6 +140,15 @@ class Taxonomy {
 		add_filter( "manage_edit-{$post_slug}_sortable_columns", array( $this, 'register_sortable_columns' ) );
 		add_filter( 'posts_orderby', array( $this, 'taxonomy_orderby' ), 10, 2 );
 
+		// Allow commas in taxonomy term by using '--' instead of ', ' upon creation.
+		if ( ! is_admin() ) {
+
+			add_filter( 'get_' . $post_slug, array( $this, 'comma_taxonomy_filter' ) );
+			add_filter( 'get_the_taxonomies', array( $this, 'comma_taxonomies_filter' ) );
+			add_filter( 'get_terms', array( $this, 'comma_taxonomies_filter' ) );
+			add_filter( 'get_the_terms', array( $this, 'comma_taxonomies_filter' ) );
+
+		}
 	}
 
 	/**
@@ -299,6 +308,46 @@ class Taxonomy {
 		}
 
 		return $orderby;
+
+	}
+
+	/**
+	 * Replace two hyphens with a comma and a space in taxonomy names.
+	 *
+	 * @param array $tag_arr Existing tag array.
+	 * @return array
+	 */
+	public function comma_taxonomy_filter( $tag_arr ) {
+
+		$tag_arr_new = $tag_arr;
+
+		if ( $tag_arr->taxonomy === $this->slug && strpos( $tag_arr->name, '--' ) ) {
+
+			$tag_arr_new->name = str_replace( '--', ', ', $tag_arr->name );
+
+		}
+
+		return $tag_arr_new;
+
+	}
+
+	/**
+	 * Replace two hyphens in array of taxonomies with a comma and a space.
+	 *
+	 * @param array $tags_arr Array of tags.
+	 * @return array
+	 */
+	public function comma_taxonomies_filter( $tags_arr ) {
+
+		$tags_arr_new = array();
+
+		foreach ( $tags_arr as $tag_arr ) {
+
+			$tags_arr_new[] = $this->comma_taxonomy_filter( $tag_arr );
+
+		}
+
+		return $tags_arr_new;
 
 	}
 
