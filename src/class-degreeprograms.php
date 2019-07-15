@@ -82,10 +82,8 @@ class DegreePrograms {
 		);
 
 		// Add page template custom fields.
-		if ( class_exists( 'acf' ) ) {
-			require_once AGDPR_DIR_PATH . 'fields/degree-fields.php';
-			require_once AGDPR_DIR_PATH . 'fields/search-fields.php';
-		}
+		require_once AGDPR_DIR_PATH . 'src/class-customfields.php';
+		$fields = new \DegreePrograms\CustomFields();
 
 		/* Flush rewrite rules on plugin installation */
 		if ( get_option( 'af4_agrilife_flush_rewrite_rules_flag' ) ) {
