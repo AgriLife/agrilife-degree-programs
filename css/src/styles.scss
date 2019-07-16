@@ -78,6 +78,7 @@ h1 {
 		@include xy-gutters( $grid-padding-gutters / 2, padding );
 		position: relative;
 		margin-bottom: $grid-padding-gutters / 2;
+		overflow: hidden;
 
 		div {
 			position: absolute;
