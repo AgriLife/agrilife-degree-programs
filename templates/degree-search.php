@@ -24,6 +24,43 @@ add_action( 'genesis_before_content', 'degree_search_filters' );
 add_action( 'genesis_entry_content', 'degree_search_content' );
 
 /**
+ * Get degree program posts based on a custom field taxonomy.
+ *
+ * @since 0.1.0
+ * @param array $args Args for a WP_Query call.
+ * @return WP_Query object
+ */
+function adp_get_degree_posts( $args = array() ) {
+
+	// Get taxonomies of posts which have a given Level taxonomy.
+	$args   = array_merge(
+		array(
+			'post_type'      => 'degree-program',
+			'posts_per_page' => -1,
+		),
+		$args
+	);
+	$fields = get_field( 'degree_program_search' );
+	$level  = $fields['degree_level'];
+
+	if ( $level ) {
+
+		$level             = $level->slug;
+		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			array(
+				'taxonomy' => 'level',
+				'field'    => 'slug',
+				'terms'    => $level,
+			),
+		);
+
+	}
+
+	return new WP_Query( $args );
+
+}
+
+/**
  * Show degree search filters.
  *
  * @since 0.1.0
@@ -61,31 +98,8 @@ function degree_search_filters() {
 		array()
 	);
 
-	$output = $sidebar_defaults['before'];
-
-	// Get taxonomies of posts which have a Level taxonomy of Undergrad.
-	$args   = array(
-		'post_type'      => 'degree-program',
-		'posts_per_page' => -1,
-		'fields'         => 'ids',
-	);
-	$fields = get_field( 'degree_program_search' );
-	$level  = $fields['degree_level'];
-
-	if ( $level ) {
-
-		$level             = $level->slug;
-		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-			array(
-				'taxonomy' => 'level',
-				'field'    => 'slug',
-				'terms'    => $level,
-			),
-		);
-
-	}
-
-	$query    = new WP_Query( $args );
+	$output   = $sidebar_defaults['before'];
+	$query    = adp_get_degree_posts( array( 'fields' => 'ids' ) );
 	$post_ids = $query->posts;
 
 	if ( empty( $post_ids ) ) {
@@ -209,29 +223,8 @@ function degree_search_filters() {
  */
 function degree_search_content() {
 
-	$output = '<div class="grid-container full"><div class="degrees grid-x">';
-
-	// Get degrees.
-	$args   = array(
-		'post_type' => 'degree-program',
-	);
-	$fields = get_field( 'degree_program_search' );
-	$level  = $fields['degree_level'];
-
-	if ( $level ) {
-
-		$level             = $level->slug;
-		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-			array(
-				'taxonomy' => 'level',
-				'field'    => 'slug',
-				'terms'    => $level,
-			),
-		);
-
-	}
-
-	$degrees = new WP_Query( $args );
+	$output  = '<div class="grid-container full"><div class="degrees grid-x">';
+	$degrees = adp_get_degree_posts();
 
 	if ( empty( $degrees->posts ) ) {
 
