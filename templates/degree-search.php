@@ -186,7 +186,8 @@ function degree_search_filters() {
 			),
 			'h3'    => array(),
 			'label' => array(
-				'for' => array(),
+				'class' => array(),
+				'for'   => array(),
 			),
 			'input' => array(
 				'class'    => array(),
@@ -244,10 +245,17 @@ function degree_search_content() {
 		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
 		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
 		$link  = get_field( 'degree_program', $value->ID );
+		$thumb = get_the_post_thumbnail( $value->ID, 'medium' );
 		$href  = $link ? " href=\"{$link['link']}\"" : '';
 		$tag   = $link ? 'a' : 'div';
 		foreach ( $terms as $term ) {
 			$class[] = "{$term->taxonomy}-{$term->slug}";
+		}
+		if ( empty( $thumb ) ) {
+			$thumb = sprintf(
+				'<img alt="Image unavailable" src="%simages/default.svg" style="border:1px solid black;" />',
+				AGDPR_DIR_URL
+			);
 		}
 		$open  = sprintf(
 			'<%s class="%s"%s>',
@@ -260,7 +268,7 @@ function degree_search_content() {
 		$output .= sprintf(
 			'%s%s<div>%s</div>%s',
 			$open,
-			get_the_post_thumbnail( $value->ID, 'medium' ),
+			$thumb,
 			$value->post_title,
 			$close
 		);
