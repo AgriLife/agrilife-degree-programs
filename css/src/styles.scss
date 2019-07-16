@@ -20,15 +20,26 @@ h1 {
 	margin-bottom: $grid-margin-gutters;
 
 	input {
-		margin: 0 .5rem;
+		margin: 1px .5rem 0;
+		height: 16px;
+		width: 16px;
 	}
 
 	label {
-		line-height: 1.4;
+		line-height: 18px;
 	}
 
-	.item > .cell:first-child {
-		line-height: 1;
+	.item {
+		align-items: flex-start;
+		margin-top: 2px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		> .cell:first-child {
+			line-height: 1;
+		}
 	}
 
 	ul.menu:not(.is-accordion-submenu) {

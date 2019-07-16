@@ -114,7 +114,7 @@ function degree_search_filters() {
 	);
 
 	// Taxonomy search bar output.
-	$checkbox = '<li class="item grid-x"><div class="cell shrink"><input class="%s" type="checkbox" id="dept_%s" value="%s-%s"></div><div class="cell auto"><label for="dept_%s">%s</label></div></li>';
+	$checkbox = '<li class="item grid-x"><input class="cell shrink %s" type="checkbox" id="dept_%s" value="%s-%s"><label class="cell auto" for="dept_%s">%s</label></li>';
 	$output  .= '<ul id="degree-filters" class="vertical menu accordion-menu" data-accordion-menu>';
 	$output  .= '<li><a href="#">Departments</a>';
 	$output  .= '<ul class="vertical menu">';
