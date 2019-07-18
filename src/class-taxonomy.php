@@ -339,15 +339,21 @@ class Taxonomy {
 	 */
 	public function comma_taxonomies_filter( $tags_arr ) {
 
-		$tags_arr_new = array();
+		foreach ( $tags_arr as $key => $tag_arr ) {
 
-		foreach ( $tags_arr as $tag_arr ) {
+			if (
+				'object' === gettype( $tag_arr ) &&
+				property_exists( $tag_arr, 'taxonomy' ) &&
+				$this->slug === $tag_arr->taxonomy
+			) {
 
-			$tags_arr_new[] = $this->comma_taxonomy_filter( $tag_arr );
+				$tags_arr[ $key ] = $this->comma_taxonomy_filter( $tag_arr );
+				break;
 
+			}
 		}
 
-		return $tags_arr_new;
+		return $tags_arr;
 
 	}
 
