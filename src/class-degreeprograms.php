@@ -86,9 +86,9 @@ class DegreePrograms {
 		$fields = new \DegreePrograms\CustomFields();
 
 		/* Flush rewrite rules on plugin installation */
-		if ( get_option( 'af4_agrilife_flush_rewrite_rules_flag' ) ) {
+		if ( get_option( 'AGDPR_flush_rewrite_rules_flag' ) ) {
 			flush_rewrite_rules();
-			delete_option( 'af4_agrilife_flush_rewrite_rules_flag' );
+			delete_option( 'AGDPR_flush_rewrite_rules_flag' );
 		}
 
 	}

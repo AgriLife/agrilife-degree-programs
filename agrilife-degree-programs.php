@@ -43,7 +43,7 @@ function agrilife_degree_programs_activation() {
 
 	if ( ! get_option( 'AGDPR_flush_rewrite_rules_flag' ) ) {
 
-		add_option( 'AGDPR_rewrite_rules_flag', true );
+		add_option( 'AGDPR_flush_rewrite_rules_flag', true );
 
 	}
 
