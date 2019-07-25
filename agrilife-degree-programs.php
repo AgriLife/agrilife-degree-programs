@@ -47,6 +47,20 @@ function agrilife_degree_programs_activation() {
 
 	}
 
+	// Check for missing dependencies.
+	$plugin = is_plugin_active( 'advanced-custom-fields-pro/acf.php' );
+	if ( false === $plugin ) {
+		$error = sprintf(
+			/* translators: %s: URL for plugins dashboard page */
+			__(
+				'Plugin NOT activated: The <strong>AgriLife Degree Programs</strong> plugin needs the <strong>Advanced Custom Fields Pro</strong> plugin to be installed and activated first. <a href="%s">Back to plugins page</a>',
+				'agrilife-degree-programs'
+			),
+			get_admin_url( null, '/plugins.php' )
+		);
+		wp_die( wp_kses_post( $error ) );
+	}
+
 }
 
 /**
