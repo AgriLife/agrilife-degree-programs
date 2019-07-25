@@ -7,16 +7,15 @@
     $activeInputs = $inputs.filter ':checked'
     $degrees = $ '.degree'
     if $activeInputs.length is 0
+      # Show all degrees
       $degrees.filter ':hidden'
         .fadeIn()
-      $inputs.not ':enabled'
-        .removeAttr 'disabled'
     else
       # Decide which degrees to show.
       activeInputClasses = []
       $activeInputs.each ( index ) ->
         activeInputClasses.push '.' + this.value
-      selected = activeInputClasses.join ''
+      selected = activeInputClasses.join ', '
       $activeDegrees = $degrees.filter selected
       # Show or hide degrees.
       $activeDegrees.fadeIn()
@@ -31,12 +30,6 @@
           if taxonomies[j] not in activeTaxonomies then activeTaxonomies.push '.' + taxonomies[j]
           j++
       activeTaxonomies = activeTaxonomies.join ','
-      $inputs.filter activeTaxonomies
-        .not ':enabled'
-        .removeAttr 'disabled'
-      $inputs.not activeTaxonomies
-        .not ':disabled'
-        .attr 'disabled', true
   $update()
   $('#degree-filters input').on 'change', $update
   # Open the degree search filter menus by default on medium and up.
