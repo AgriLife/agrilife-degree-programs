@@ -108,12 +108,6 @@ function degree_search_filters() {
 
 	}
 
-	$departments = get_terms(
-		array(
-			'taxonomy'   => 'department',
-			'object_ids' => $post_ids,
-		)
-	);
 	$degreetypes = get_terms(
 		array(
 			'taxonomy'   => 'degree-type',
@@ -126,27 +120,18 @@ function degree_search_filters() {
 			'object_ids' => $post_ids,
 		)
 	);
+	$departments = get_terms(
+		array(
+			'taxonomy'   => 'department',
+			'object_ids' => $post_ids,
+		)
+	);
 
 	// Taxonomy search bar output.
 	$checkbox = '<li class="item grid-x"><input class="cell shrink %s" type="checkbox" id="dept_%s" value="%s-%s"><label class="cell auto" for="dept_%s">%s</label></li>';
 	$output  .= '<ul id="degree-filters" class="vertical menu accordion-menu" data-accordion-menu>';
-	$output  .= '<li><a href="#">Departments</a>';
+	$output  .= '<li><a href="#">Degree Types</a>';
 	$output  .= '<ul class="vertical menu">';
-	foreach ( $departments as $key => $value ) {
-		$output .= sprintf(
-			$checkbox,
-			"department-{$value->slug}",
-			$value->term_id,
-			'department',
-			$value->slug,
-			$value->term_id,
-			$value->name
-		);
-	}
-	$output .= '</ul></li>';
-
-	$output .= '<li><a href="#">Degree Types</a>';
-	$output .= '<ul class="vertical menu">';
 	foreach ( $degreetypes as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -168,6 +153,21 @@ function degree_search_filters() {
 			"interest-{$value->slug}",
 			$value->term_id,
 			'interest',
+			$value->slug,
+			$value->term_id,
+			$value->name
+		);
+	}
+	$output .= '</ul></li>';
+
+	$output .= '<li><a href="#">Departments</a>';
+	$output .= '<ul class="vertical menu">';
+	foreach ( $departments as $key => $value ) {
+		$output .= sprintf(
+			$checkbox,
+			"department-{$value->slug}",
+			$value->term_id,
+			'department',
 			$value->slug,
 			$value->term_id,
 			$value->name
