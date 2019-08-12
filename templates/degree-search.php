@@ -74,7 +74,7 @@ function degree_search_filters() {
 		array(
 			'before'              => genesis_markup(
 				array(
-					'open'    => '<aside class="degree-search-sidebar widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ),
+					'open'    => '<aside class="degree-search-sidebar widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ) . '<h2>Filter Programs<a href="#" class="reset-degree-search">Reset</a></h2>',
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 					'params'  => array(
@@ -129,9 +129,9 @@ function degree_search_filters() {
 
 	// Taxonomy search bar output.
 	$checkbox = '<li class="item grid-x"><input class="cell shrink %s" type="checkbox" id="dept_%s" value="%s-%s"><label class="cell auto" for="dept_%s">%s</label></li>';
-	$output  .= '<ul id="degree-filters" class="vertical menu accordion-menu" data-accordion-menu>';
-	$output  .= '<li><a href="#">Degree Types</a>';
-	$output  .= '<ul class="vertical menu">';
+	$output  .= '<ul id="degree-filters" class="reset">';
+	$output  .= '<li><h3>Degree Types</h3>';
+	$output  .= '<ul>';
 	foreach ( $degreetypes as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -145,8 +145,8 @@ function degree_search_filters() {
 	}
 	$output .= '</ul></li>';
 
-	$output .= '<li><a href="#">Interests</a>';
-	$output .= '<ul class="vertical menu last">';
+	$output .= '<li><h3>Interest Categories</h3>';
+	$output .= '<ul>';
 	foreach ( $interests as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -160,8 +160,8 @@ function degree_search_filters() {
 	}
 	$output .= '</ul></li>';
 
-	$output .= '<li><a href="#">Departments</a>';
-	$output .= '<ul class="vertical menu">';
+	$output .= '<li><h3>Departments</h3>';
+	$output .= '<ul class="last">';
 	foreach ( $departments as $key => $value ) {
 		$output .= sprintf(
 			$checkbox,
@@ -185,19 +185,20 @@ function degree_search_filters() {
 				'class' => array(),
 			),
 			'ul'    => array(
-				'id'                  => array(),
-				'class'               => array(),
-				'data-accordion-menu' => array(),
+				'id'    => array(),
+				'class' => array(),
 			),
 			'li'    => array(
 				'class' => array(),
 			),
 			'a'     => array(
-				'href' => array(),
+				'href'  => array(),
+				'class' => array(),
 			),
 			'div'   => array(
 				'class' => array(),
 			),
+			'h2'    => array(),
 			'h3'    => array(),
 			'label' => array(
 				'class' => array(),

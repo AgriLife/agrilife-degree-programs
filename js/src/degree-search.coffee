@@ -30,10 +30,14 @@
           if taxonomies[j] not in activeTaxonomies then activeTaxonomies.push '.' + taxonomies[j]
           j++
       activeTaxonomies = activeTaxonomies.join ','
+  $reset = (e) ->
+    e.preventDefault();
+    $inputs = $ '#degree-filters input'
+    $activeInputs = $inputs.filter ':checked'
+    $activeInputs.each (i) ->
+      $(this).prop 'checked', false
   $update()
   $('#degree-filters input').on 'change', $update
-  # Open the degree search filter menus by default on medium and up.
-  if Foundation.MediaQuery.atLeast 'medium'
-    $('#degree-filters ul').addClass 'is-active'
+  $('.reset-degree-search').on 'click', $reset
   return
 ) jQuery
