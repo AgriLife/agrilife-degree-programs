@@ -36,6 +36,7 @@
     $activeInputs = $inputs.filter ':checked'
     $activeInputs.each (i) ->
       $(this).prop 'checked', false
+    $update()
   $update()
   $('#degree-filters input').on 'change', $update
   $('.reset-degree-search').on 'click', $reset
