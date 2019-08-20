@@ -209,7 +209,7 @@
 			height: 100%;
 
 			&:hover div {
-				border-left: 4px solid $nav-yellow;
+				box-shadow: 4px 0 inset $nav-yellow;
 			}
 		}
 
