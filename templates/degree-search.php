@@ -236,12 +236,14 @@ function degree_search_content() {
 
 	// Post list.
 	foreach ( $degrees->posts as $key => $value ) {
-		$terms = wp_get_post_terms( $value->ID, $taxonomies );
-		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
-		$link  = get_field( 'degree_program', $value->ID );
-		$thumb = get_the_post_thumbnail( $value->ID, 'medium' );
-		$href  = $link ? " href=\"{$link['link']}\"" : '';
-		$tag   = $link ? 'a' : 'div';
+		$terms      = wp_get_post_terms( $value->ID, $taxonomies );
+		$fields     = get_fields( $value->ID ) ? get_fields( $value->ID ) : array();
+		$class      = [ 'degree', 'cell', 'medium-3', 'small-6' ];
+		$thumb      = get_the_post_thumbnail( $value->ID, 'medium_cropped' );
+		$tag        = 'div';
+		$link       = array_key_exists( 'link', $fields ) ? $fields['link'] : false;
+		$link_open  = $link ? "<a href=\"{$link}\">" : '';
+		$link_close = $link ? '</a>' : '';
 		foreach ( $terms as $term ) {
 			$class[] = "{$term->taxonomy}-{$term->slug}";
 		}
@@ -252,12 +254,12 @@ function degree_search_content() {
 			);
 		}
 		$open  = sprintf(
-			'<%s class="%s"%s>',
+			'<%s class="%s">%s',
 			$tag,
 			implode( ' ', $class ),
-			$href
+			$link_open
 		);
-		$close = "</{$tag}>";
+		$close = "{$link_close}</{$tag}>";
 
 		$output .= sprintf(
 			'%s%s<div>%s</div>%s',
