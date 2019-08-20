@@ -69,12 +69,13 @@ function adp_get_degree_posts( $args = array() ) {
 function degree_search_filters() {
 
 	$id               = 'degree-sidebar-search';
+	$button_mobile    = '<a class="degree-search-toggle title-bar-navigation show-for-small-only" data-toggle="filter-wrap" data-toggle-focus="filter-wrap" aria-controls="filter-wrap"><div class="menu-icon"></div><div>Filters</div></a>';
 	$sidebar_defaults = apply_filters(
 		'genesis_widget_area_defaults',
 		array(
 			'before'              => genesis_markup(
 				array(
-					'open'    => '<aside class="degree-search-sidebar widget-area cell small-12 medium-3">' . genesis_sidebar_title( $id ) . '<h2>Filter Programs<a href="#" class="reset-degree-search">Reset</a></h2>',
+					'open'    => '<aside id="search-sidebar" class="degree-search-sidebar widget-area cell small-12 medium-3"><div class="wrap sticky">' . $button_mobile . '<div id="filter-wrap" class="hide-for-small-only" data-toggler=".hide-for-small-only" aria-expanded="false">' . genesis_sidebar_title( $id ) . '<h2>Filter Programs<a href="#" class="reset-search">Reset</a></h2>',
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 					'params'  => array(
@@ -84,7 +85,7 @@ function degree_search_filters() {
 			),
 			'after'               => genesis_markup(
 				array(
-					'close'   => '</aside>',
+					'close'   => '</div></div></aside>',
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 				)
@@ -98,9 +99,11 @@ function degree_search_filters() {
 		array()
 	);
 
-	$output   = $sidebar_defaults['before'];
-	$query    = adp_get_degree_posts( array( 'fields' => 'ids' ) );
-	$post_ids = $query->posts;
+	$output    = '';
+	$query     = adp_get_degree_posts( array( 'fields' => 'ids' ) );
+	$tax_slugs = get_object_taxonomies( 'degree-program' );
+	$post_ids  = $query->posts;
+	$tax_terms = array();
 
 	if ( empty( $post_ids ) ) {
 
@@ -108,103 +111,100 @@ function degree_search_filters() {
 
 	}
 
-	$degreetypes = get_terms(
-		array(
-			'taxonomy'   => 'degree-type',
-			'object_ids' => $post_ids,
-		)
-	);
-	$interests   = get_terms(
-		array(
-			'taxonomy'   => 'interest',
-			'object_ids' => $post_ids,
-		)
-	);
-	$departments = get_terms(
-		array(
-			'taxonomy'   => 'department',
-			'object_ids' => $post_ids,
-		)
-	);
+	$output .= $sidebar_defaults['before'];
+
+	$degree_level = get_field( 'degree_program_search' )['degree_level'];
+	foreach ( $tax_slugs as $slug ) {
+		$tax_terms[ $slug ] = get_terms(
+			array(
+				'taxonomy'   => $slug,
+				'object_ids' => $post_ids,
+			)
+		);
+	}
+
+	// Remove the Degree Level taxonomy from search filters.
+	$degree_level = get_field( 'degree_program_search' )['degree_level'];
+	if ( $degree_level ) {
+		unset( $tax_terms[ $degree_level->taxonomy ] );
+	}
 
 	// Taxonomy search bar output.
-	$checkbox = '<li class="item grid-x"><input class="cell shrink %s" type="checkbox" id="dept_%s" value="%s-%s"><label class="cell auto" for="dept_%s">%s</label></li>';
+	$checkbox = '<li class="item grid-x"><input class="cell shrink %s-%s" type="checkbox" id="dept_%s" value="%s-%s"><label class="cell auto" for="dept_%s">%s</label></li>';
 	$output  .= '<ul id="degree-filters" class="reset">';
-	$output  .= '<li><h3>Degree Types</h3>';
-	$output  .= '<ul>';
-	foreach ( $degreetypes as $key => $value ) {
-		$output .= sprintf(
-			$checkbox,
-			"degree-type-{$value->slug}",
-			$value->term_id,
-			'degree-type',
-			$value->slug,
-			$value->term_id,
-			$value->name
-		);
-	}
-	$output .= '</ul></li>';
+	foreach ( $tax_terms as $key => $value ) {
+		$meta = get_taxonomy( $key );
 
-	$output .= '<li><h3>Interest Categories</h3>';
-	$output .= '<ul>';
-	foreach ( $interests as $key => $value ) {
-		$output .= sprintf(
-			$checkbox,
-			"interest-{$value->slug}",
-			$value->term_id,
-			'interest',
-			$value->slug,
-			$value->term_id,
-			$value->name
-		);
-	}
-	$output .= '</ul></li>';
+		$output .= "<li><h3>{$meta->label}</h3>";
+		$output .= '<ul>';
 
-	$output .= '<li><h3>Departments</h3>';
-	$output .= '<ul class="last">';
-	foreach ( $departments as $key => $value ) {
-		$output .= sprintf(
-			$checkbox,
-			"department-{$value->slug}",
-			$value->term_id,
-			'department',
-			$value->slug,
-			$value->term_id,
-			$value->name
-		);
+		foreach ( $value as $key2 => $value2 ) {
+			$output .= sprintf(
+				$checkbox,
+				$value2->taxonomy,
+				$value2->slug,
+				$value2->term_id,
+				$value2->taxonomy,
+				$value2->slug,
+				$value2->term_id,
+				$value2->name
+			);
+		}
+		$output .= '</ul></li>';
 	}
-	$output .= '</ul></li></ul>';
 
+	$output .= '</ul>';
 	$output .= $sidebar_defaults['after'];
 
 	// Output.
 	echo wp_kses(
 		$output,
 		array(
-			'aside' => array(
-				'class' => array(),
+			'button' => array(
+				'class'             => array(),
+				'type'              => array(),
+				'data-toggle'       => array(),
+				'data-toggle-focus' => array(),
+				'aria-controls'     => array(),
 			),
-			'ul'    => array(
+			'aside'  => array(
+				'id'                    => array(),
+				'class'                 => array(),
+				'data-sticky-container' => array(),
+			),
+			'ul'     => array(
 				'id'    => array(),
 				'class' => array(),
 			),
-			'li'    => array(
+			'li'     => array(
 				'class' => array(),
 			),
-			'a'     => array(
-				'href'  => array(),
-				'class' => array(),
+			'a'      => array(
+				'href'              => array(),
+				'class'             => array(),
+				'data-toggle'       => array(),
+				'data-toggle-focus' => array(),
+				'aria-controls'     => array(),
 			),
-			'div'   => array(
-				'class' => array(),
+			'div'    => array(
+				'id'              => array(),
+				'class'           => array(),
+				'data-sticky'     => array(),
+				'data-sticky-on'  => array(),
+				'data-margin-top' => array(),
+				'data-anchor'     => array(),
+				'data-top-anchor' => array(),
+				'data-btm-anchor' => array(),
+				'data-toggler'    => array(),
+				'aria-expanded'   => array(),
 			),
-			'h2'    => array(),
-			'h3'    => array(),
-			'label' => array(
+			'h2'     => array(),
+			'h3'     => array(),
+			'label'  => array(
 				'class' => array(),
 				'for'   => array(),
 			),
-			'input' => array(
+			'input'  => array(
 				'class'    => array(),
 				'onchange' => array(),
 				'type'     => array(),
@@ -224,8 +224,9 @@ function degree_search_filters() {
  */
 function degree_search_content() {
 
-	$output  = '<div class="grid-container full"><div class="degrees grid-x">';
-	$degrees = adp_get_degree_posts();
+	$output     = '<div class="grid-container full"><div class="degrees grid-x">';
+	$degrees    = adp_get_degree_posts();
+	$taxonomies = get_object_taxonomies( 'degree-program' );
 
 	if ( empty( $degrees->posts ) ) {
 
@@ -235,8 +236,7 @@ function degree_search_content() {
 
 	// Post list.
 	foreach ( $degrees->posts as $key => $value ) {
-
-		$terms = wp_get_post_terms( $value->ID, array( 'department', 'degree-type', 'interest' ) );
+		$terms = wp_get_post_terms( $value->ID, $taxonomies );
 		$class = [ 'degree', 'cell', 'medium-3', 'small-6' ];
 		$link  = get_field( 'degree_program', $value->ID );
 		$thumb = get_the_post_thumbnail( $value->ID, 'medium' );

@@ -7,7 +7,7 @@ module.exports = (grunt) ->
         'css/src/*.scss',
         'js/src/*.coffee'
       ]
-      tasks: ['sasslint', 'sass:dev', 'coffee']
+      tasks: ['develop']
     postcss:
       pkg:
         options:
