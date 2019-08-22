@@ -53,9 +53,6 @@
 	}
 
 	@include breakpoint(small only) {
-		// max-height: 65px;
-		// z-index: 1;
-
 		.invisible-for-small-only {
 			visibility: hidden;
 		}
@@ -203,17 +200,28 @@
 		margin-bottom: $grid-padding-gutters / 2;
 		overflow: hidden;
 
+		@include breakpoint(medium) {
+			@include breakpoint(900px down) {
+				@include xy-cell( 6, false, 0 );
+			}
+		}
+
 		a {
-			display: inline-block;
+			display: block;
 			position: relative;
 			height: 100%;
 
-			&:hover div {
+			&:hover .title {
 				box-shadow: 4px 0 inset $nav-yellow;
 			}
 		}
 
-		div {
+		> div {
+			right: $grid-padding-gutters / 4;
+			left: $grid-padding-gutters / 4;
+		}
+
+		.title {
 			position: absolute;
 			left: 0;
 			right: 0;
@@ -227,6 +235,10 @@
 
 			@include breakpoint(medium) {
 				font-size: 1.4vw;
+
+				@include breakpoint(900px down) {
+					font-size: 3vw;
+				}
 			}
 
 			@include breakpoint(xlarge) {
@@ -237,21 +249,6 @@
 				text-decoration: none;
 			}
 		}
-
-		> div {
-			right: $grid-padding-gutters / 4;
-			left: $grid-padding-gutters / 4;
-		}
-
-		@include breakpoint(medium) {
-			@include breakpoint(900px down) {
-				@include xy-cell( 6, false, 0 );
-
-				div {
-					font-size: 3vw;
-				}
-			}
-		}
 	}
 }
 
@@ -259,4 +256,11 @@
 	#genesis-content .entry-content > .grid-container {
 		margin-top: $grid-padding-gutters / 2;
 	}
+}
+
+.truncate {
+	display: -webkit-box; // sass-lint:disable-line no-vendor-prefixes
+	-webkit-line-clamp: 3; // sass-lint:disable-line no-vendor-prefixes
+	-webkit-box-orient: vertical; // sass-lint:disable-line no-vendor-prefixes
+	overflow: hidden;
 }
