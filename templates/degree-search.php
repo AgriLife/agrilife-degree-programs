@@ -237,13 +237,13 @@ function degree_search_content() {
 	// Post list.
 	foreach ( $degrees->posts as $key => $value ) {
 		$terms      = wp_get_post_terms( $value->ID, $taxonomies );
-		$fields     = get_fields( $value->ID ) ? get_fields( $value->ID ) : array();
+		$fields     = get_fields( $value->ID ) ? get_fields( $value->ID )['degree_program'] : array();
 		$class      = [ 'degree', 'cell', 'medium-3', 'small-6' ];
 		$thumb      = get_the_post_thumbnail( $value->ID, 'medium_cropped' );
 		$tag        = 'div';
 		$link       = array_key_exists( 'link', $fields ) ? $fields['link'] : false;
-		$link_open  = $link ? "<a href=\"{$link}\">" : '';
-		$link_close = $link ? '</a>' : '';
+		$link_open  = $link ? "<a href=\"{$link}\" class=\"wrap\">" : '<div class=\"wrap\">';
+		$link_close = $link ? '</a>' : '</div>';
 		foreach ( $terms as $term ) {
 			$class[] = "{$term->taxonomy}-{$term->slug}";
 		}
