@@ -1,6 +1,6 @@
 {
   "name": "agrilife-degree-programs",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "College degree program custom post type.",
   "main": "agrilife-degree-program.php",
   "scripts": {
