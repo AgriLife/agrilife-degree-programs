@@ -17,7 +17,7 @@
       activeInputClasses = []
       $activeInputs.each ( index ) ->
         activeInputClasses.push '.' + this.value
-      selected = activeInputClasses.join ', '
+      selected = activeInputClasses.join ''
       $activeItems = $items.filter selected
       # Show or hide degrees.
       $activeItems.fadeIn()
