@@ -223,8 +223,14 @@
 			bottom: 0;
 			top: 50%;
 			background-color: rgba($dark-blue, .8);
-			padding: 0 $grid-padding-gutters / 2;
+			padding: 0 $grid-padding-gutters / 3;
 			color: $white;
+
+			.has-cloud-fonts & {
+				font-weight: 500;
+				letter-spacing: .02em;
+				font-size: 4.5vw;
+			}
 
 			img {
 				width: 100%;
@@ -241,6 +247,11 @@
 				height: 3.5em;
 				line-height: 1.15em;
 				overflow: hidden;
+
+				.has-cloud-fonts & {
+					height: 3em;
+					line-height: 1em;
+				}
 			}
 		}
 
@@ -253,12 +264,20 @@
 
 			.title {
 				font-size: 1.5rem;
+
+				.has-cloud-fonts & {
+					font-size: 1.4rem;
+				}
 			}
 		}
 
 		@include breakpoint(medium) {
 			.title {
 				font-size: 1.125rem;
+
+				.has-cloud-fonts & {
+					font-size: 1.4rem;
+				}
 			}
 
 			@include breakpoint(1215px down) {
@@ -266,6 +285,10 @@
 
 				.title {
 					font-size: 1.9vw;
+
+					.has-cloud-fonts & {
+						font-size: 2.3vw;
+					}
 				}
 			}
 
@@ -274,6 +297,10 @@
 
 				.title {
 					font-size: 2.9vw;
+
+					.has-cloud-fonts & {
+						font-size: 3.5vw;
+					}
 				}
 			}
 		}
