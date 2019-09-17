@@ -79,7 +79,7 @@ class DegreePrograms {
 			AGDPR_TEMPLATE_PATH,
 			'degree-program',
 			'agrilife-degree-program',
-			array(),
+			array( 'department' ),
 			'dashicons-portfolio',
 			array( 'title', 'editor', 'thumbnail', 'genesis-seo', 'genesis-scripts' )
 		);
