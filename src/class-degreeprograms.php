@@ -41,6 +41,8 @@ class DegreePrograms {
 	 */
 	private function __construct() {
 
+		$this->require_classes();
+
 		$this->register_templates();
 
 		add_action( 'init', array( $this, 'init' ) );
@@ -56,18 +58,15 @@ class DegreePrograms {
 	public function init() {
 
 		/* Set up asset files */
-		require_once AGDPR_DIR_PATH . 'src/class-assets.php';
 		$assets = new \DegreePrograms\Assets();
 
 		/* Add taxonomies */
-		require_once AGDPR_DIR_PATH . 'src/class-taxonomy.php';
 		new \DegreePrograms\Taxonomy( 'Level', 'level', 'degree-program', array( 'hierarchical' => true ) );
 		new \DegreePrograms\Taxonomy( 'Department', 'department', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program' );
 
 		/* Add custom post type */
-		require_once AGDPR_DIR_PATH . 'src/class-posttype.php';
 		$post_type = new \DegreePrograms\PostType(
 			array(
 				'singular' => 'Degree Program',
@@ -82,7 +81,6 @@ class DegreePrograms {
 		);
 
 		// Add page template custom fields.
-		require_once AGDPR_DIR_PATH . 'src/class-customfields.php';
 		$fields = new \DegreePrograms\CustomFields();
 
 		/* Flush rewrite rules on plugin installation */
@@ -101,9 +99,29 @@ class DegreePrograms {
 	 */
 	private function register_templates() {
 
-		require_once AGDPR_DIR_PATH . '/src/class-pagetemplate.php';
 		$search = new \DegreePrograms\PageTemplate( AGDPR_TEMPLATE_PATH, 'degree-search.php', 'Degree Search' );
 		$search->register();
+
+	}
+
+	/**
+	 * Initialize the various classes
+	 *
+	 * @since 0.1.0
+	 * @return void
+	 */
+	private function require_classes() {
+
+		// Set up asset files.
+		require_once AGDPR_DIR_PATH . 'src/class-assets.php';
+
+		// Add post type classes.
+		require_once AGDPR_DIR_PATH . 'src/class-taxonomy.php';
+		require_once AGDPR_DIR_PATH . 'src/class-posttype.php';
+		require_once AGDPR_DIR_PATH . 'src/class-pagetemplate.php';
+
+		// Add custom fields.
+		require_once AGDPR_DIR_PATH . 'src/class-customfields.php';
 
 	}
 
