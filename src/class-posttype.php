@@ -61,6 +61,7 @@ class PostType {
 	 * @param  array  $supports   The attributes this post type supports. Accepts arguments found in
 	 *                            WordPress core register_post_type function.
 	 * @param  array  $templates  The template file names.
+	 * @param  array  $user_args  The overriding arguments for function register_post_type.
 	 * @return void
 	 */
 	public function __construct(
@@ -77,7 +78,8 @@ class PostType {
 		),
 		$icon = 'dashicons-portfolio',
 		$supports = array( 'title' ),
-		$templates = array()
+		$templates = array(),
+		$user_args = array()
 	) {
 
 		$this->post_type = $slug;
@@ -116,25 +118,28 @@ class PostType {
 		);
 
 		// Post type arguments.
-		$args = array(
-			'can_export'         => true,
-			'has_archive'        => true,
-			'labels'             => $labels,
-			'menu_icon'          => $icon,
-			'menu_position'      => 20,
-			'public'             => true,
-			'publicly_queryable' => true,
-			'show_in_rest'       => true,
-			'show_in_menu'       => true,
-			'show_in_admin_bar'  => true,
-			'show_in_nav_menus'  => true,
-			'show_ui'            => true,
-			'supports'           => $supports,
-			'taxonomies'         => $taxonomies,
-			'rewrite'            => array(
-				'with_front' => false,
-				'slug'       => $slug,
+		$args = array_merge(
+			array(
+				'can_export'         => true,
+				'has_archive'        => true,
+				'labels'             => $labels,
+				'menu_icon'          => $icon,
+				'menu_position'      => 20,
+				'public'             => true,
+				'publicly_queryable' => true,
+				'show_in_rest'       => true,
+				'show_in_menu'       => true,
+				'show_in_admin_bar'  => true,
+				'show_in_nav_menus'  => true,
+				'show_ui'            => true,
+				'supports'           => $supports,
+				'taxonomies'         => $taxonomies,
+				'rewrite'            => array(
+					'with_front' => false,
+					'slug'       => $slug,
+				),
 			),
+			$user_args
 		);
 
 		// Register the post type.
