@@ -67,7 +67,7 @@ class DegreePrograms {
 
 		// We share the department taxonomy with other custom post types.
 		if ( ! taxonomy_exists( 'department' ) ) {
-			new \Aglifesciences\Taxonomy( 'Department', 'department' );
+			new \DegreePrograms\Taxonomy( 'Department', 'department' );
 		}
 
 		/* Add custom post type */
