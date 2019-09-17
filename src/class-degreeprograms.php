@@ -61,13 +61,21 @@ class DegreePrograms {
 		$assets = new \DegreePrograms\Assets();
 
 		/* Add taxonomies */
-		new \DegreePrograms\Taxonomy( 'Level', 'level', 'degree-program', array( 'hierarchical' => true ) );
-		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program' );
-		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program' );
+		new \DegreePrograms\Taxonomy(
+			'Level',
+			'level',
+			'degree-program',
+			array(
+				'hierarchical' => true,
+				'public'       => false,
+			)
+		);
+		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program', array( 'public' => false ) );
+		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program', array( 'public' => false ) );
 
 		// We share the department taxonomy with other custom post types.
 		if ( ! taxonomy_exists( 'department' ) ) {
-			new \DegreePrograms\Taxonomy( 'Department', 'department' );
+			new \DegreePrograms\Taxonomy( 'Department', 'department', null, array( 'public' => false ) );
 		}
 
 		/* Add custom post type */
@@ -81,7 +89,18 @@ class DegreePrograms {
 			'agrilife-degree-program',
 			array( 'department' ),
 			'dashicons-portfolio',
-			array( 'title', 'editor', 'thumbnail', 'genesis-seo', 'genesis-scripts' )
+			array( 'title', 'editor', 'thumbnail' ),
+			array(),
+			array(
+				'public'              => false,
+				'publicly_queryable'  => true,
+				'show_ui'             => true,
+				'exclude_from_search' => false,
+				'show_in_nav_menus'   => false,
+				'has_archive'         => true,
+				'rewrite'             => false,
+				'show_in_rest'        => true,
+			)
 		);
 
 		// Add page template custom fields.
