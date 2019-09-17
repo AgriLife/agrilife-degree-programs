@@ -62,9 +62,13 @@ class DegreePrograms {
 
 		/* Add taxonomies */
 		new \DegreePrograms\Taxonomy( 'Level', 'level', 'degree-program', array( 'hierarchical' => true ) );
-		new \DegreePrograms\Taxonomy( 'Department', 'department', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program' );
 		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program' );
+
+		// We share the department taxonomy with other custom post types.
+		if ( ! taxonomy_exists( 'department' ) ) {
+			new \Aglifesciences\Taxonomy( 'Department', 'department' );
+		}
 
 		/* Add custom post type */
 		$post_type = new \DegreePrograms\PostType(
