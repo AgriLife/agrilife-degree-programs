@@ -39,6 +39,36 @@
                         "load_terms": 0,
                         "return_format": "object",
                         "multiple": 0
+                    },
+                    {
+                        "key": "field_5d829000718d0",
+                        "label": "Exclude Taxonomies From Search Filters",
+                        "name": "exclude_tax_from_search_filters",
+                        "type": "select",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "none": "Select",
+                            "level": "Level",
+                            "degree-type": "Degree Type",
+                            "interest": "Interest",
+                            "department": "Department"
+                        },
+                        "default_value": [
+                            "none"
+                        ],
+                        "allow_null": 1,
+                        "multiple": 1,
+                        "ui": 0,
+                        "return_format": "value",
+                        "ajax": 0,
+                        "placeholder": ""
                     }
                 ]
             }

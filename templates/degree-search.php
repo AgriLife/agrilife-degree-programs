@@ -123,10 +123,12 @@ function degree_search_filters() {
 		);
 	}
 
-	// Remove the Degree Level taxonomy from search filters.
-	$degree_level = get_field( 'degree_program_search' )['degree_level'];
-	if ( $degree_level ) {
-		unset( $tax_terms[ $degree_level->taxonomy ] );
+	// Remove taxonomies from search filters based on custom field selection.
+	$excluded_taxonomies = get_field( 'degree_program_search' )['exclude_tax_from_search_filters'];
+	foreach ( $excluded_taxonomies as $taxonomy ) {
+		if ( 'none' !== $taxonomy ) {
+			unset( $tax_terms[ $taxonomy ] );
+		}
 	}
 
 	// Taxonomy search bar output.
