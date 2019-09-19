@@ -57,9 +57,6 @@ class DegreePrograms {
 	 */
 	public function init() {
 
-		/* Set up asset files */
-		$assets = new \DegreePrograms\Assets();
-
 		/* Add taxonomies */
 		new \DegreePrograms\Taxonomy(
 			'Level',
@@ -134,9 +131,6 @@ class DegreePrograms {
 	 * @return void
 	 */
 	private function require_classes() {
-
-		// Set up asset files.
-		require_once AGDPR_DIR_PATH . 'src/class-assets.php';
 
 		// Add post type classes.
 		require_once AGDPR_DIR_PATH . 'src/class-taxonomy.php';

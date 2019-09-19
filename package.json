@@ -10,19 +10,12 @@
     "checkphp": "vendor/bin/phpcs --standard=WordPress ./*.php ./src ./templates"
   },
   "dependencies": {
-    "autoprefixer": "^9.2.1",
-    "foundation-sites": "^6.5.3",
     "grunt": "^1.0.3",
     "grunt-contrib-coffee": "^2.1.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "grunt-postcss": "^0.9.0",
-    "grunt-sass": "^3.0.2",
-    "node-sass": "^4.12.0",
-    "what-input": "^5.2.3"
+    "grunt-contrib-compress": "^1.4.3"
   },
   "devDependencies": {
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-sass-lint": "^0.2.4"
+    "grunt-contrib-watch": "^1.1.0"
   },
   "engines": {
     "node": ">=8.0.0"

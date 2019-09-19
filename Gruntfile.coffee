@@ -1,54 +1,11 @@
 module.exports = (grunt) ->
-  sass = require 'node-sass'
   @initConfig
     pkg: @file.readJSON('package.json')
     watch:
       files: [
-        'css/src/*.scss',
         'js/src/*.coffee'
       ]
-      tasks: ['develop']
-    postcss:
-      pkg:
-        options:
-          processors: [
-            require('autoprefixer')()
-          ]
-          failOnError: true
-        files:
-          'css/styles.css': 'css/styles.css'
-      dev:
-        options:
-          map: true
-          processors: [
-            require('autoprefixer')()
-          ]
-          failOnError: true
-        files:
-          'css/styles.css': 'css/styles.css'
-    sass:
-      pkg:
-        options:
-          implementation: sass
-          noSourceMap: true
-          outputStyle: 'compressed'
-          precision: 2
-          includePaths: ['node_modules/foundation-sites/scss']
-        files:
-          'css/styles.css': 'css/src/styles.scss'
-      dev:
-        options:
-          implementation: sass
-          sourceMap: true
-          outputStyle: 'nested'
-          precision: 2
-          includePaths: ['node_modules/foundation-sites/scss']
-        files:
-          'css/styles.css': 'css/src/styles.scss'
-    sasslint:
-      options:
-        configFile: '.sass-lint.yml'
-      target: ['css/src/**/*.s+(a|c)ss']
+      tasks: ['default']
     coffee:
       compile:
         options:
@@ -71,12 +28,8 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-contrib-compress'
   @loadNpmTasks 'grunt-contrib-coffee'
-  @loadNpmTasks 'grunt-sass-lint'
-  @loadNpmTasks 'grunt-sass'
-  @loadNpmTasks 'grunt-postcss'
 
-  @registerTask 'default', ['sass:pkg', 'postcss:pkg', 'coffee']
-  @registerTask 'develop', ['sasslint', 'sass:dev', 'postcss:dev', 'coffee']
+  @registerTask 'default', ['coffee']
   @registerTask 'release', ['compress', 'makerelease']
   @registerTask 'makerelease', 'Set release branch for use in the release task', ->
     done = @async()
