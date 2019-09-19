@@ -54,7 +54,6 @@ module.exports = (grunt) ->
         options:
           bare: true
         files:
-          'js/degree-search.js': 'js/src/degree-search.coffee'
           'js/admin_edit.js': 'js/src/admin_edit.coffee'
     compress:
       main:

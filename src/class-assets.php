@@ -35,12 +35,6 @@ class Assets {
 		// Enqueue extension styles.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 2 );
 
-		// Register scripts.
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ), 11 );
-
-		// Enqueue scripts.
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 13 );
-
 	}
 
 	/**
@@ -72,40 +66,6 @@ class Assets {
 		if ( is_page_template( 'degree-search.php' ) ) {
 
 			wp_enqueue_style( 'agrilife-degree-programs' );
-
-		}
-
-	}
-
-	/**
-	 * Registers scripts
-	 *
-	 * @since 0.1.0
-	 * @return void
-	 */
-	public function register_scripts() {
-
-		wp_register_script(
-			'agrilife-degree-programs',
-			AGDPR_DIR_URL . '/js/degree-search.js',
-			array( 'jquery', 'foundation' ),
-			filemtime( AGDPR_DIR_PATH . 'js/degree-search.js' ),
-			true
-		);
-
-	}
-
-	/**
-	 * Enqueues scripts
-	 *
-	 * @since 0.1.0
-	 * @return void
-	 */
-	public function enqueue_scripts() {
-
-		if ( is_page_template( 'degree-search.php' ) ) {
-
-			wp_enqueue_script( 'agrilife-degree-programs' );
 
 		}
 
