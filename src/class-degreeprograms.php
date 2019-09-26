@@ -58,21 +58,25 @@ class DegreePrograms {
 	public function init() {
 
 		/* Add taxonomies */
-		new \DegreePrograms\Taxonomy(
-			'Level',
-			'level',
-			'degree-program',
-			array(
-				'hierarchical' => true,
-				'public'       => false,
-			)
-		);
 		new \DegreePrograms\Taxonomy( 'Degree Type', 'degree-type', 'degree-program', array( 'public' => false ) );
 		new \DegreePrograms\Taxonomy( 'Interest', 'interest', 'degree-program', array( 'public' => false ) );
 
 		// We share the department taxonomy with other custom post types.
 		if ( ! taxonomy_exists( 'department' ) ) {
 			new \DegreePrograms\Taxonomy( 'Department', 'department', null, array( 'public' => false ) );
+		}
+
+		// We share the level taxonomy with other custom post types.
+		if ( ! taxonomy_exists( 'level' ) ) {
+			new \DegreePrograms\Taxonomy(
+				'Level',
+				'level',
+				null,
+				array(
+					'hierarchical' => true,
+					'public'       => false,
+				)
+			);
 		}
 
 		/* Add custom post type */
@@ -84,7 +88,7 @@ class DegreePrograms {
 			AGDPR_TEMPLATE_PATH,
 			'degree-program',
 			'agrilife-degree-program',
-			array( 'department' ),
+			array( 'department', 'level' ),
 			'dashicons-portfolio',
 			array( 'title', 'editor', 'thumbnail' ),
 			array(),
