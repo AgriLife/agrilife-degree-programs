@@ -93,10 +93,10 @@ class DegreePrograms {
 			array( 'title', 'editor', 'thumbnail' ),
 			array(),
 			array(
-				'public'              => false,
-				'publicly_queryable'  => true,
+				'public'              => true,
+				'publicly_queryable'  => false,
 				'show_ui'             => true,
-				'exclude_from_search' => false,
+				'exclude_from_search' => true,
 				'show_in_nav_menus'   => false,
 				'has_archive'         => true,
 				'rewrite'             => false,
