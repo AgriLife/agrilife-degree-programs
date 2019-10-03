@@ -87,7 +87,7 @@ function degree_search_filters() {
 	$taxonomies          = get_object_taxonomies( $post_slug );
 	$excluded_taxonomies = get_field( 'degree_program_search' )['exclude_tax_from_search_filters'];
 	$id                  = 'degree-sidebar-search';
-	$button_mobile       = '<a class="post-tile-search-toggle ' . $post_slug . '-toggle title-bar-navigation show-for-small-only" data-toggle="filter-wrap" data-toggle-focus="filter-wrap" aria-controls="filter-wrap"><div class="menu-icon"></div><div>Filters</div></a>';
+	$button_mobile       = '<a class="post-tile-search-toggle ' . $post_slug . '-toggle title-bar-navigation" data-toggle="filter-wrap" data-toggle-focus="filter-wrap" aria-controls="filter-wrap"><div class="menu-icon"></div><div>Filters</div></a>';
 	$taxonomy_list       = implode( ',', $taxonomies );
 	$output              = '';
 	$query               = adp_get_degree_posts( array( 'fields' => 'ids' ) );
@@ -98,7 +98,7 @@ function degree_search_filters() {
 		array(
 			'before'              => genesis_markup(
 				array(
-					'open'    => '<aside id="search-sidebar" class="' . $post_slug . '-sidebar widget-area cell small-12 medium-3" data-taxonomy-list="' . $taxonomy_list . '" data-post-tile-search><div class="wrap sticky">' . $button_mobile . '<div id="filter-wrap" class="hide-for-small-only" data-toggler=".hide-for-small-only" aria-expanded="false">' . genesis_sidebar_title( $id ) . '<h2>Filter Programs<a href="#" data-post-tile-reset class="reset-search">Reset</a></h2>',
+					'open'    => '<aside id="search-sidebar" class="' . $post_slug . '-sidebar widget-area cell small-shrink medium-3" data-taxonomy-list="' . $taxonomy_list . '" data-post-tile-search data-sticky-container><div data-sticky data-options="stickyOn:small;anchor:genesis-content;marginTop:7"  class="wrap sticky">' . $button_mobile . '<div id="filter-wrap" data-toggler=".hide" aria-expanded="false">' . genesis_sidebar_title( $id ) . '<h2>Filter Programs<a href="#" data-post-tile-reset class="reset-search">Reset</a></h2>',
 					'context' => 'widget-area-wrap',
 					'echo'    => false,
 					'params'  => array(
@@ -213,6 +213,7 @@ function degree_search_filters() {
 				'data-sticky-on'  => array(),
 				'data-margin-top' => array(),
 				'data-anchor'     => array(),
+				'data-options'    => array(),
 				'data-top-anchor' => array(),
 				'data-btm-anchor' => array(),
 				'data-toggler'    => array(),
